@@ -28,18 +28,10 @@ function RegistrationForm() {
 
   return (
     <div>
-        <div>
-            <Typography variant="h1" className={classes.welcomeText}>
-                Bienvenido a tu Asistente Legal!
-            </Typography>
-            <Typography variant="h2" className={classes.secondaryText}>
-                Di adiós a los abogados
-            </Typography>
-        </div>
         <form onSubmit={handleSubmit}>
         <Grid container spacing={2}>
             <Grid item xs={12}>
-            <Typography variant="h5">Registrarse</Typography>
+            <Typography variant="h4">Registrarse</Typography>
             </Grid>
             <Grid item xs={12}>
             <TextField

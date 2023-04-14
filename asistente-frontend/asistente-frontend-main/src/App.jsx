@@ -4,14 +4,17 @@ import viteLogo from '/vite.svg'
 import './App.css'
 
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
-import RegistrationForm from './components/RegistrationForm'
 import LandingPage from './pages/LandingPage'
+import RegistrationPage from './pages/RegistrationPage'
 
 function App() {
 
   return (
     <div className="App">
-      <LandingPage/>
+      <Routes>
+        <Route path="/" element={<LandingPage/>}/>
+        <Route path="/register" element={<RegistrationPage/>}/>
+      </Routes>
     </div>
   )
 }

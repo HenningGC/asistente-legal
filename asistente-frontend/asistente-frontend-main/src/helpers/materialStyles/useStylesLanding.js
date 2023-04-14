@@ -16,8 +16,9 @@ export const useStyles = makeStyles((theme) => ({
       opacity: 0.7,
     },
     loginButton: {
-      marginTop: theme.spacing(2),
+      marginTop: theme.spacing(10),
       marginRight: theme.spacing(2),
+
     },
     registerLink: {
     textDecoration: 'none',
