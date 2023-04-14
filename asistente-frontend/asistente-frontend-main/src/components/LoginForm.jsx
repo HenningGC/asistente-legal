@@ -23,7 +23,7 @@ function LoginForm() {
   return (
     <form onSubmit={handleSubmit} className={classes.formContainer}>
       <Typography variant="h4" className={classes.formItem}>
-        Login
+        Iniciar Sesión
       </Typography>
       <Grid item xs={12} className={classes.formItem}>
         <TextField

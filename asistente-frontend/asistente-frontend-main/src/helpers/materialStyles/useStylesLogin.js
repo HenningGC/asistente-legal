@@ -7,7 +7,8 @@ export const useStyles = makeStyles((theme) => ({
     flexDirection: 'column',
     alignItems: 'center',
     justifyContent: 'center',
-    minHeight: '30vh',
+    marginTop: 60,
+    //minHeight: '30vh',
   },
   formItem: {
     marginBottom: theme.spacing(2),

@@ -10,12 +10,6 @@ function LandingPage() {
 
   return (
     <div className={classes.container}>
-      <Typography variant="h3" className={classes.welcomeText}>
-        Bienvenido a tu Asistente Legal!
-      </Typography>
-      <Typography variant="h4" className={classes.secondaryText}>
-        Di adiós a los abogados
-      </Typography>
       <Box>
         <LoginForm/>
         <Button
@@ -23,7 +17,7 @@ function LandingPage() {
             to="/register"
             className={classes.registerLink}
         >
-            No account yet? Register
+            Aún no tienes cuenta? Regístrate aquí
         </Button>
       </Box>
       {/* You can include the RegistrationForm component here if needed */}

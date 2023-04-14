@@ -7,8 +7,7 @@ export const useStyles = makeStyles((theme) => ({
       flexDirection: 'column',
       alignItems: 'center',
       justifyContent: 'center',
-      paddingTop: theme.spacing(4),
-      paddingBottom: theme.spacing(4),
+      minHeight: '100vh',
     },
     welcomeText: {
       marginBottom: theme.spacing(1),
@@ -21,12 +20,12 @@ export const useStyles = makeStyles((theme) => ({
       marginRight: theme.spacing(2),
     },
     registerLink: {
-      textDecoration: 'none',
-      textTransform: 'none',
-      marginTop: theme.spacing(2),
-      color: theme.palette.primary.main,
-      '&:hover': {
-        textDecoration: 'underline',
-      },
+    textDecoration: 'none',
+    textTransform: 'none',
+    marginTop: theme.spacing(2),
+    color: theme.palette.primary.main,
+    '&:hover': {
+      textDecoration: 'underline',
     },
+  },
   }));
