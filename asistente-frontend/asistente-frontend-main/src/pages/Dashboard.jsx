@@ -1,6 +1,18 @@
 import React, { useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import { Typography, TextField, MenuItem, Select, FormControl, InputLabel } from '@material-ui/core';
+import {
+  Typography,
+  TextField,
+  IconButton,
+  InputAdornment,
+  Paper,
+  Box,
+  ListItem,
+  ListItemText,
+  List,
+} from '@material-ui/core';
+import DropDownLegal from '../components/DropDownLegal';
+
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -19,47 +31,103 @@ const useStyles = makeStyles((theme) => ({
     margin: theme.spacing(1),
     minWidth: 120,
   },
+  inputWrapper: {
+    position: 'relative',
+  },
+  sendButton: {
+    position: 'absolute',
+    right: 8,
+    bottom: 8,
+    backgroundColor: 'transparent',
+    border: 'none',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    cursor: 'pointer',
+  },
+  responseOutput: {
+    marginTop: theme.spacing(2),
+    marginBottom: theme.spacing(2),
+    textAlign: 'left',
+    maxWidth: 600,
+  },
 }));
 
-const legalTypes = [
-  { value: 'type1', label: 'Type 1' },
-  { value: 'type2', label: 'Type 2' },
-  { value: 'type3', label: 'Type 3' },
-];
 
 function Dashboard() {
   const classes = useStyles();
-  const [legalType, setLegalType] = useState('');
+  
+  const [selectedLegalType, setSelectedLegalType] = useState('');
+  const [responseOutput, setResponseOutput] = useState('');
 
-  const handleChange = (event) => {
-    setLegalType(event.target.value);
+  const handleChildData = (data) => {
+    setSelectedLegalType(data);
+  }
+
+  const [inputText, setInputText] = useState('');
+  const handleInputChange = (e) => {
+    setInputText(e.target.value);
+  };
+
+  const handleSubmit = async () => {
+    try {
+        const response = await fetch('http://localhost:5000/api/legal_document', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ query: inputText }),
+      });
+
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+      const responseData = await response.json();
+      console.log('Response data:', responseData);
+      setResponseOutput(responseData);
+      setInputText('');
+    } catch (error) {
+      console.error('There was a problem with the fetch operation:', error);
+    }
   };
 
   return (
     <div className={classes.container}>
       <Typography variant="h4">Asistente Legal</Typography>
       <TextField
-        label="Escriba su consulta"
-        multiline
-        rows={6}
-        variant="outlined"
-        className={classes.inputBox}
-      />
-      <FormControl className={classes.formControl}>
-        <InputLabel id="legal-type-label">Tipo de documento</InputLabel>
-        <Select
-          labelId="legal-type-label"
-          id="legal-type-select"
-          value={legalType}
-          onChange={handleChange}
-        >
-          {legalTypes.map((type) => (
-            <MenuItem key={type.value} value={type.value}>
-              {type.label}
-            </MenuItem>
-          ))}
-        </Select>
-      </FormControl>
+          label="Escriba su consulta"
+          multiline
+          rows={6}
+          variant="outlined"
+          className={classes.inputBox}
+          value={inputText}
+          onChange={(e) => setInputText(e.target.value)}
+          InputProps={{
+            endAdornment: (
+              <InputAdornment position="end">
+                <button
+                  type="button"
+                  onClick={handleSubmit}
+                  style={{
+                    backgroundColor: 'transparent',
+                    border: 'none',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    cursor: 'pointer',
+                    paddingRight: 8,
+                  }}
+                >
+                  <i className="material-icons" style={{ fontSize: 24, color: 'rgba(0, 0, 0, 0.54)' }}>
+                     ⏎
+                  </i>
+                </button>
+              </InputAdornment>
+            ),
+          }}
+        />
+        {responseOutput && <Typography className='classes.responseOutput'>{responseOutput}</Typography>}
+      {!responseOutput && <DropDownLegal onReceiveData={handleChildData} />}
     </div>
   );
 }

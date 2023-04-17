@@ -1,23 +1,34 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 import { TextField, Button, Grid, Typography } from '@material-ui/core';
 import { useStyles } from '../helpers/materialStyles/useStylesLoginForm';
+import { useAuth } from '../contexts/authContext';
 
 function LoginForm() {
   const classes = useStyles();
+  const navigate = useNavigate();
+
+  const { isAuthenticated, login } = useAuth();
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      navigate('/dashboard');
+    }
+  }, [isAuthenticated, navigate]);
+
   const [formData, setFormData] = useState({
     username: '',
     password: '',
   });
-  console.log("test")
+
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Handle form submission, e.g., call API to authenticate user
-    console.log(formData);
+    login(formData.username, formData.password);
   };
 
   return (

@@ -1,10 +1,13 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Button, TextField, Grid, Typography } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import { useStyles } from '../helpers/materialStyles/useStylesLanding';
+import { register } from '../services/authService';
 
 function RegistrationForm() {
   const classes = useStyles();
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     username: '',
     email: '',
@@ -16,14 +19,19 @@ function RegistrationForm() {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    const { password, confirmPassword } = formData;
-    password === confirmPassword ? 
-        // Handle form submission, e.g., call API to register user
-        console.log(formData) :
-        // Handle error
-        console.log('Passwords do not match');
+    const { username, email, password, confirmPassword } = formData;
+    if (password !== confirmPassword) {
+      return;
+    } else {
+      try {
+        await register(username, password, email);
+        navigate('/');
+      } catch (error) {
+        console.log(error);
+      }
+    }
   };
 
   return (

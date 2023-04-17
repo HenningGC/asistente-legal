@@ -1,14 +1,11 @@
-from flask import Flask
-from flask_mongoengine import MongoEngine
-from flask_cors import CORS
-from flask_login import LoginManager
+# app/__init__.py
 
+from flask import Flask
+from flask_cors import CORS
 
 from .config import Config
-
-login_manager = LoginManager()
-
-db = MongoEngine()
+from .extensions import db, login_manager
+from app.api import legal_document_bp
 
 def create_app():
     app = Flask(__name__)
@@ -20,8 +17,10 @@ def create_app():
 
     from app.api import bp as api_bp
     app.register_blueprint(api_bp, url_prefix='/api')
+    app.register_blueprint(legal_document_bp, url_prefix="/api")
 
     return app
+
 
 from app.models.user import User
 

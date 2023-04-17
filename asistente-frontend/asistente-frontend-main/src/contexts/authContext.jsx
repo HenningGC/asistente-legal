@@ -1,4 +1,5 @@
 import { createContext, useContext, useState } from 'react';
+import { login as loginService } from '../services/authService';
 
 const AuthContext = createContext();
 
@@ -9,8 +10,14 @@ export const useAuth = () => {
 export const AuthProvider = ({ children }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
-  const login = () => {
-    setIsAuthenticated(true);
+  const login = async (username, password) => {
+    try {
+      await loginService(username, password); // Import loginService from authService.js
+      setIsAuthenticated(true);
+    } catch (error) {
+      console.error(error);
+      // Handle error (e.g., show an error message)
+    }
   };
 
   const logout = () => {
