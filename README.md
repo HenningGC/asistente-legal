@@ -1,3 +1,4 @@
+```latex
 \documentclass{article}
 \usepackage[utf8]{inputenc}
 \usepackage{graphicx}
@@ -62,3 +63,4 @@ The source code for Asistente Legal can be found on GitHub at the following URL:
 \url{https://github.com/HenningGC/asistente-legal}
 
 \end{document}
+```
